@@ -18,12 +18,14 @@ jobs:
           java-version: '17'
 
       - name: Extract Android project ZIP
-        run: |
-          mkdir project
-          unzip -q VehicleManagerDashboard_GitHubBuild.zip -d project
+        run:
 
       - name: Install Gradle 8.9
         run: |
+          mkdir project
+          ZIP_FILE=$(find . -maxdepth 1 -type f -iname "*.zip" | head -n 1)
+          echo "Using ZIP: $ZIP_FILE"
+          unzip -q "$ZIP_FILE" -d project
           wget -q https://services.gradle.org/distributions/gradle-8.9-bin.zip
           unzip -q gradle-8.9-bin.zip
           echo "$PWD/gradle-8.9/bin" >> $GITHUB_PATH
